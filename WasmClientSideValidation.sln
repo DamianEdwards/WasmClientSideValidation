@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35605.110 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmClientSideValidation", "WasmClientSideValidation\WasmClientSideValidation.csproj", "{C19AA358-E0CB-49C4-AD18-87AF38964A52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientSideValidator", "ClientSideValidator\ClientSideValidator.csproj", "{FCCF646B-1C5A-44EC-BC36-94464E0473ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C19AA358-E0CB-49C4-AD18-87AF38964A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19AA358-E0CB-49C4-AD18-87AF38964A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19AA358-E0CB-49C4-AD18-87AF38964A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19AA358-E0CB-49C4-AD18-87AF38964A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCCF646B-1C5A-44EC-BC36-94464E0473ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCCF646B-1C5A-44EC-BC36-94464E0473ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCCF646B-1C5A-44EC-BC36-94464E0473ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCCF646B-1C5A-44EC-BC36-94464E0473ED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65824D10-5807-457F-9FD1-1ACCC15DF182}
+	EndGlobalSection
+EndGlobal

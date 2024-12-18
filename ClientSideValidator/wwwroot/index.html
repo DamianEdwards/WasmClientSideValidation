@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--  Licensed to the .NET Foundation under one or more agreements. -->
+<!-- The .NET Foundation licenses this file to you under the MIT license. -->
+<html>
+
+<head>
+  <title>ClientSideValidator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type='module' src="./main.js"></script>
+  <style>
+      .text-danger { color: red; }
+      .is-invalid { border-color: red; }
+  </style>
+</head>
+
+<body>
+  <h1>Client-side Validation with .NET in WebAssembly</h1>
+  <div>
+      <form method="post">
+          <div>
+              <input type="text" data-val="true"
+                     data-val-required="The Name field is required." id="Input_Name"
+                     name="Input.Name" value="">
+              <label for="Input_Name">Name</label>
+              <span class="text-danger"
+                    data-valmsg-for="Input.Name" data-valmsg-replace="true"></span>
+          </div>
+          <div>
+              <input type="email" data-val="true"
+                     data-val-email="The Email field is not a valid e-mail address."
+                     data-val-required="The Email field is required." id="Input_Email"
+                     name="Input.Email" value="">
+              <label for="Input_Email">Email</label>
+              <span class="text-danger"
+                    data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+          </div>
+          <button type="submit">Submit</button>
+          <input name="__RequestVerificationToken" type="hidden" value="CfDJ8FJx1R5_kANFmBjoULQ...">
+      </form>
+  </div>
+</body>
+
+</html>
