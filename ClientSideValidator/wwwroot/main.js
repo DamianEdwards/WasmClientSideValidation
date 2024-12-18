@@ -76,39 +76,51 @@ const exports = await getAssemblyExports(config.mainAssemblyName);
         form.addEventListener("submit", e => {
             let isValid = true;
             for (const fieldName in validatableFields) {
-                isValid = isValid && validateField(validatableFields[fieldName]);
+                isValid = validateField(validatableFields[fieldName]) && isValid;
             }
+            setCssClass(form, isValid);
             if (!isValid) {
-                fieldInfo.form.classList.remove("is-valid");
-                fieldInfo.form.classList.add("is-invalid");
                 e.preventDefault();
                 e.stopPropagation();
-            } else {
-                fieldInfo.form.classList.remove("is-invalid");
-                fieldInfo.form.classList.add("is-valid");
             }
             form.classList.add("was-validated");
             return isValid;
         });
 
         function validateField(fieldInfo) {
+            if (fieldInfo.validators.required) {
+                // Ensure required is valid first
+                if (!runValidator('required', fieldInfo)) {
+                    return;
+                }
+            }
             for (const validator in fieldInfo.validators) {
+                if (validator === 'required') continue;
+
                 // Invoke the validator function for the current provider
-                const validatorArgs = fieldInfo.validators[validator];
-                const isValid = exports.ClientValidator.IsValid(validator, validatorArgs, fieldInfo.element.value);
-                setCssClass(fieldInfo.element, isValid);
-                if (!isValid) {
-                    setValidationMessage(fieldInfo, validatorArgs.message);
-
-                    // Set the form to invalid
-                    setCssClass(fieldInfo.form, isValid);
-
+                if (!runValidator(validator, fieldInfo)) {
                     // Stop validating if the current field is invalid
                     return false;
                 }
-                setValidationMessage(fieldInfo, "");
             }
             return true;
+        }
+
+        function runValidator(validator, fieldInfo) {
+            const validatorArgs = fieldInfo.validators[validator];
+            const isValid = exports.ClientValidator.IsValid(validator, validatorArgs, fieldInfo.element.value);
+            setCssClass(fieldInfo.element, isValid);
+            if (!isValid) {
+                setValidationMessage(fieldInfo, validatorArgs.message);
+
+                // Set the form to invalid
+                setCssClass(fieldInfo.form, isValid);
+
+                return false;
+            }
+            // Clear validation message
+            setValidationMessage(fieldInfo, "");
+            return isValid;
         }
 
         function setValidationMessage(fieldInfo, message) {

@@ -10,28 +10,32 @@
   <script type='module' src="./main.js"></script>
   <style>
       .text-danger { color: red; }
-      .is-invalid { border-color: red; }
+      .form-field { margin-bottom: .6em }
+      input[type] { border: 1px solid silver; padding: .4em }
+      input[type]:focus { outline: 2px solid #899cfca4; }
+      input[type].is-invalid { border-color: red; }
+      input[type].is-invalid:focus { outline: 2px solid #f58ca4; }
   </style>
 </head>
 
 <body>
   <h1>Client-side Validation with .NET in WebAssembly</h1>
   <div>
-      <form method="post">
-          <div>
+      <form method="get" novalidate>
+          <div class="form-field">
+              <label for="Input_Name">Name</label>
               <input type="text" data-val="true"
                      data-val-required="The Name field is required." id="Input_Name"
                      name="Input.Name" value="">
-              <label for="Input_Name">Name</label>
               <span class="text-danger"
                     data-valmsg-for="Input.Name" data-valmsg-replace="true"></span>
           </div>
-          <div>
+          <div class="form-field">
+              <label for="Input_Email">Email</label>
               <input type="email" data-val="true"
                      data-val-email="The Email field is not a valid e-mail address."
                      data-val-required="The Email field is required." id="Input_Email"
                      name="Input.Email" value="">
-              <label for="Input_Email">Email</label>
               <span class="text-danger"
                     data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
           </div>

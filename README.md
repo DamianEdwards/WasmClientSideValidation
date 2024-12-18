@@ -25,6 +25,8 @@ You can also just run it from the command line using the .NET CLI, e.g. from the
 dotnet run --project ./ClientSideValidator
 ```
 
-The ASP.NET Core project in the solution isn't wired up at all yet so can be ignored, but the idea is I'll wire up the full end-to-end soon.
+The ASP.NET Core project in the solution isn't wired up at all yet so can be ignored, but the idea is I'll wire up the full end-to-end soon. The *wwwroot/index.html* file in the *ClientSideValidator* project contains markup for a form similar to what ASP.NET Core MVC/Razor Pages will output based on Model state, Tag Helpers, etc., i.e. it contains the `data-val-*` attributes that the jQuery-based validation uses.
 
 Once running you can navigate to the very basic sample page and interact with the form fields. The fields will be validated when they lose focus or the value is changed, and when the form is submittted.
+
+![Demo of client-side validation in action](./assets/.NET-WebAssembly-ClientValidation-demo.mp4)]
