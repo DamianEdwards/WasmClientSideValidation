@@ -3,9 +3,24 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Mono AOT is generally producing bigger downloads than the same app with interpreter
     <RunAOTCompilation>true</RunAOTCompilation>
+    -->
+
     <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     <InvariantGlobalization>true</InvariantGlobalization>
     <InvariantTimezone>true</InvariantTimezone>
+
+    <DebuggerSupport>false</DebuggerSupport>
+    <WasmEnableSIMD>false</WasmEnableSIMD>
+    <DynamicCodeSupport>false</DynamicCodeSupport>
+
+    <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <_ExtraTrimmerArgs>$(_ExtraTrimmerArgs) --substitutions "$(MSBuildThisFileDirectory)ILLink.Substitutions.xml"</_ExtraTrimmerArgs>
+    
+    <!-- for the analysis see ./obj/Release/net9.0/linked/linker-dependencies.xml -->
+    <_TrimmerDumpDependencies>true</_TrimmerDumpDependencies>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,71 @@
+<linker>
+  <!-- 
+  I randomly trimmed methods which I believe are not necessary for this demo.
+  For example, System.UriTypeConverter -> System.Uri is worth 60kb after compression.
+  
+  Other good gains which I didn't do in System.ComponentModel could be:
+  - replacing ConcurrentDictionary with Dictionary since browser is not multi-threaded
+  - avoid using reflection, like System.ComponentModel.ReflectTypeDescriptionProvider
+  - trim unnecessary System.ComponentModel.*Converter
+
+  For more please see ./obj/Release/net9.0/linked/linker-dependencies.xml and use analysis tools.
+  https://github.com/dotnet/runtime/blob/main/src/tools/illink/src/analyzer/README.md#how-to-use-the-analyzer
+
+  -->
+  <assembly fullname="System.Private.CoreLib">
+    <type fullname="Mono.HotReload.FieldStore">
+      <method signature="Mono.HotReload.FieldStore Create(System.RuntimeTypeHandle)" body="remove"/>
+    </type>
+    <type fullname="Mono.HotReload.InstanceFieldTable/InstanceFields">
+      <method signature="Mono.HotReload.FieldStore LookupOrAdd(System.RuntimeTypeHandle,System.UInt32)" body="remove"/>
+    </type>
+    <type fullname="System.TimeZoneInfo">
+      <method signature="System.Boolean TryGetLocalTzFile(System.Byte[]&amp;,System.String&amp;)" body="remove"/>
+      <method signature="System.TimeZoneInfo get_Local()" body="remove"/>
+    </type>
+    <type fullname="Interop/Sys">
+      <method signature="System.Int32 Unlink(System.String)" body="remove"/>
+    </type>
+    <type fullname="System.Threading.Tasks.Task">
+      <method signature="System.Boolean InternalWait(System.Int32,System.Threading.CancellationToken)" body="remove"/>
+    </type>
+    <type fullname="System.Threading.Thread">
+      <method signature="System.Void Sleep(System.Int32)" body="remove"/>
+    </type>
+    <type fullname="System.Diagnostics.StackTrace">
+      <method signature="System.Void .ctor(System.Boolean)" body="remove"/>
+      <method signature="System.String ToString(System.Diagnostics.StackTrace/TraceFormat)" body="remove"/>
+    </type>
+    <type fullname="System.Runtime.Loader.AssemblyLoadContext">
+      <method signature="System.Reflection.RuntimeAssembly ResolveSatelliteAssembly(System.Reflection.AssemblyName)" body="remove"/>
+      <method signature="System.Reflection.RuntimeAssembly MonoResolveUsingResolveSatelliteAssembly(System.IntPtr,System.String)" body="remove"/>
+    </type>
+  </assembly>
+  <assembly fullname="System.Runtime.InteropServices.JavaScript">
+    <type fullname="System.Runtime.InteropServices.JavaScript.JSMarshalerArgument">
+      <method signature="System.Void ToJS(System.Object)" body="remove"/>
+      <method signature="System.Void ToJS(System.Object[])" body="remove"/>
+    </type>
+    <type fullname="System.Runtime.InteropServices.JavaScript.JavaScriptExports">
+      <method signature="System.Void LoadLazyAssembly(System.Runtime.InteropServices.JavaScript.JSMarshalerArgument*)" body="remove"/>
+      <method signature="System.Void LoadSatelliteAssembly(System.Runtime.InteropServices.JavaScript.JSMarshalerArgument*)" body="remove"/>
+      <method signature="System.Void GetManagedStackTrace(System.Runtime.InteropServices.JavaScript.JSMarshalerArgument*)" body="remove"/>
+      <method signature="System.Void DumpAotProfileData(System.Byte&amp;,System.Int32,System.String)" body="remove"/>
+    </type>
+  </assembly>
+  <assembly fullname="System.ComponentModel.TypeConverter">
+    <type fullname="System.UriTypeConverter">
+      <method signature="System.UriKind GetUriKind(System.Uri)" body="remove"/>
+      <method signature="System.Object ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" body="remove"/>
+      <method signature="System.Object ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" body="remove"/>
+    </type>
+    <type fullname="System.ComponentModel.CultureInfoConverter">
+      <method signature="System.Object ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" body="remove"/>
+      <method signature="System.Object ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" body="remove"/>
+    </type>
+    <type fullname="System.ComponentModel.VersionConverter">
+      <method signature="System.Object ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" body="remove"/>
+      <method signature="System.Object ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" body="remove"/>
+    </type>
+  </assembly>
+</linker>
