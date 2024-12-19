@@ -5,22 +5,38 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Mono AOT is generally producing bigger downloads than the same app with interpreter
     <RunAOTCompilation>true</RunAOTCompilation>
+    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     -->
 
-    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
     <InvariantGlobalization>true</InvariantGlobalization>
     <InvariantTimezone>true</InvariantTimezone>
 
-    <DebuggerSupport>false</DebuggerSupport>
-    <WasmEnableSIMD>false</WasmEnableSIMD>
     <DynamicCodeSupport>false</DynamicCodeSupport>
 
-    <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
+    <!-- https://emscripten.org/docs/tools_reference/emcc.html#emcc-oz -->
+    <EmccLinkOptimizationFlag>-Oz -g0</EmccLinkOptimizationFlag>
+
+    <WasmEnableSIMD>false</WasmEnableSIMD>
+
     <PublishTrimmed>true</PublishTrimmed>
+    <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
     <TrimMode>full</TrimMode>
     <_ExtraTrimmerArgs>$(_ExtraTrimmerArgs) --substitutions "$(MSBuildThisFileDirectory)ILLink.Substitutions.xml"</_ExtraTrimmerArgs>
     
     <!-- for the analysis see ./obj/Release/net9.0/linked/linker-dependencies.xml -->
     <_TrimmerDumpDependencies>true</_TrimmerDumpDependencies>
+
   </PropertyGroup>
+  <ItemGroup>
+    <_MonoRuntimeComponentDontLink Include="libmono-profiler-aot.a" />
+    <_MonoRuntimeComponentDontLink Include="libmono-profiler-browser.a" />
+    <_MonoRuntimeComponentDontLink Include="libmono-profiler-log.a" />
+    <_MonoRuntimeComponentDontLink Include="libSystem.Globalization.Native.a" />
+    <_MonoRuntimeComponentDontLink Include="wasm-bundled-timezones.a" />
+
+    <!-- kill real libz and provide dummy symbols -->    
+    <NativeFileReference Include="zlib-stub.c" />
+    <_MonoRuntimeComponentDontLink Include="libz.a" />
+    <_MonoRuntimeComponentDontLink Include="libSystem.IO.Compression.Native.a" />
+  </ItemGroup>
 </Project>

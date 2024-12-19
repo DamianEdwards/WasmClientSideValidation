@@ -67,5 +67,8 @@
       <method signature="System.Object ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" body="remove"/>
       <method signature="System.Object ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" body="remove"/>
     </type>
+    <type fullname="System.ComponentModel.ReflectTypeDescriptionProvider">
+      <method signature="System.ComponentModel.TypeConverter GetConverter(System.Type,System.Object)" body="remove"/>
+    </type>
   </assembly>
 </linker>
