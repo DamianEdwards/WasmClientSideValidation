@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WebAssembly">
   <PropertyGroup>
     <!-- https://emscripten.org/docs/tools_reference/emcc.html#emcc-oz -->
     <EmccLinkOptimizationFlag>-Oz -g0</EmccLinkOptimizationFlag>
@@ -14,6 +14,10 @@
     <_MonoRuntimeComponentDontLink Include="libmono-profiler-log.a" />
     <_MonoRuntimeComponentDontLink Include="libSystem.Globalization.Native.a" />
     <_MonoRuntimeComponentDontLink Include="wasm-bundled-timezones.a" />
+
+    <_MonoRuntimeComponentDontLink Include="libicudata.a" />
+    <_MonoRuntimeComponentDontLink Include="libicui18n.a" />
+    <_MonoRuntimeComponentDontLink Include="libicuuc.a" />
 
     <!-- kill real libz and provide dummy symbols -->    
     <NativeFileReference Include="zlib-stub.c" />
