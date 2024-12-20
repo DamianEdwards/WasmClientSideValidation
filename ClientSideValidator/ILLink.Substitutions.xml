@@ -32,6 +32,9 @@
     <type fullname="System.Threading.Thread">
       <method signature="System.Void Sleep(System.Int32)" body="remove"/>
     </type>
+    <type fullname="System.Threading.LowLevelMonitor">
+      <method signature="System.Void Wait()" body="remove"/>
+    </type>
     <type fullname="System.Diagnostics.StackTrace">
       <method signature="System.Void .ctor(System.Boolean)" body="remove"/>
       <method signature="System.String ToString(System.Diagnostics.StackTrace/TraceFormat)" body="remove"/>
@@ -66,6 +69,9 @@
     <type fullname="System.ComponentModel.VersionConverter">
       <method signature="System.Object ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)" body="remove"/>
       <method signature="System.Object ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)" body="remove"/>
+    </type>
+    <type fullname="System.ComponentModel.ReflectTypeDescriptionProvider">
+      <method signature="System.ComponentModel.TypeConverter GetConverter(System.Type,System.Object)" body="remove"/>
     </type>
   </assembly>
 </linker>

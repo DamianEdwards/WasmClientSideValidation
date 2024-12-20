@@ -14,6 +14,7 @@ setModuleImports('main.js', {
 });
 
 const config = getConfig();
+config.mainAssemblyName="ClientSideValidator";
 const exports = await getAssemblyExports(config.mainAssemblyName);
 
 //document.addEventListener('DOMContentLoaded', () => {
