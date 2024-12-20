@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
     <AssemblyName>ClientSideValidator</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <InvariantGlobalization>true</InvariantGlobalization>

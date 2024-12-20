@@ -32,6 +32,9 @@
     <type fullname="System.Threading.Thread">
       <method signature="System.Void Sleep(System.Int32)" body="remove"/>
     </type>
+    <type fullname="System.Threading.LowLevelMonitor">
+      <method signature="System.Void Wait()" body="remove"/>
+    </type>
     <type fullname="System.Diagnostics.StackTrace">
       <method signature="System.Void .ctor(System.Boolean)" body="remove"/>
       <method signature="System.String ToString(System.Diagnostics.StackTrace/TraceFormat)" body="remove"/>
