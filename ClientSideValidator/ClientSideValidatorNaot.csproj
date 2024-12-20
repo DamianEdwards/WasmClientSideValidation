@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <UsingNativeAOT>true</UsingNativeAOT>
+
+    <OutputType>Exe</OutputType>
+    <PublishDir>$(MSBuildThisFileDirectory)/bin/$(Configuration)/AppBundle/_framework</PublishDir>
+    <RestoreAdditionalProjectSources>$(RestoreAdditionalProjectSources);https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-experimental/nuget/v3/index.json</RestoreAdditionalProjectSources>
+    <UsingBrowserRuntimeWorkload>false</UsingBrowserRuntimeWorkload>
+    <UsingWasiRuntimeWorkload>false</UsingWasiRuntimeWorkload>
+    <UsingEmscriptenWorkload>true</UsingEmscriptenWorkload>
+    <DotNetJsApi>true</DotNetJsApi>
+    <SelfContained>true</SelfContained>
+    <UseAppHost>false</UseAppHost>
+    <_ExeExt Condition="$([MSBuild]::IsOSPlatform('WINDOWS'))">.exe</_ExeExt>
+    <!-- _SetupEmscripten ?
+    <EmscriptenSdkToolsPath>$([MSBuild]::EnsureTrailingSlash($(EMSDK_PATH)))</EmscriptenSdkToolsPath>
+    <EmscriptenNodeToolsPath>$([MSBuild]::NormalizeDirectory($(EmscriptenSdkToolsPath), 'node', 'bin'))</EmscriptenNodeToolsPath>
+    -->
+    <ToolsRID>win-x64</ToolsRID>
+    <ProductVersion>9.0</ProductVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="$(ProductVersion)-*" />
+    <PackageReference Include="runtime.$(ToolsRID).Microsoft.DotNet.ILCompiler.LLVM" Version="$(ProductVersion)-*" />
+    <!-- TODO: Can be removed when emscripten workload refactoring is aligned with NativeAOT -->
+    <EmscriptenEnvVars Include="DOTNET_EMSCRIPTEN_LLVM_ROOT=$(EmscriptenSdkToolsPath)bin" />
+    <EmscriptenEnvVars Include="DOTNET_EMSCRIPTEN_BINARYEN_ROOT=$(EmscriptenSdkToolsPath)" />
+    <EmscriptenEnvVars Include="DOTNET_EMSCRIPTEN_NODE_JS=$([MSBuild]::NormalizePath($(EmscriptenNodeToolsPath), 'bin', 'node$(_ExeExt)'))" />
+    <EmscriptenEnvVars Include="EM_FROZEN_CACHE=1" />
+    <EmscriptenEnvVars Include="EM_CACHE=$(WasmCachePath)" Condition="'$(WasmCachePath)' != ''" />
+
+    <CustomLinkerArg Include="-Oz -g0" />
+  </ItemGroup>
+
+  <Target Name="CopyWwwRoot" AfterTargets="CopyNativeBinary">
+    <ItemGroup>
+      <_WwwRootFiles Include="$(MSBuildThisFileDirectory)/wwwroot/*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles = "@(_WwwRootFiles)"
+          DestinationFolder="$(MSBuildThisFileDirectory)/bin/$(Configuration)/AppBundle/"
+          SkipUnchangedFiles="true"
+          OverwriteReadOnlyFiles="true"
+          >
+    </Copy>
+  </Target>
+
+  <Target Name="CompressWwwRoot" AfterTargets="CopyWwwRoot">
+    <ItemGroup>
+      <_CompressFiles Include="$(MSBuildThisFileDirectory)/bin/$(Configuration)/AppBundle/*.*" />
+      <_CompressFiles Include="$(MSBuildThisFileDirectory)/bin/$(Configuration)/AppBundle/_framework/*.*" />
+      <_CompressFiles Remove="$(MSBuildThisFileDirectory)/bin/$(Configuration)/AppBundle/_framework/*.json" />
+    </ItemGroup>
+
+    <Exec Command="brotli -f -9 %(_CompressFiles.Identity)" />
+  </Target>
+
+</Project>

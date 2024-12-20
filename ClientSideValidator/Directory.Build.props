@@ -1,0 +1,22 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
+    <AssemblyName>ClientSideValidator</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantTimezone>true</InvariantTimezone>
+    <DynamicCodeSupport>false</DynamicCodeSupport>
+    <WasmEnableSIMD>false</WasmEnableSIMD>
+    <PublishTrimmed>true</PublishTrimmed>
+    <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
+    <TrimMode>full</TrimMode>
+    <_ExtraTrimmerArgs>$(_ExtraTrimmerArgs) --substitutions "$(MSBuildThisFileDirectory)ILLink.Substitutions.xml"</_ExtraTrimmerArgs>
+    <DebugType>none</DebugType>
+    
+    <!-- for the analysis see ./obj/Release/net9.0/linked/linker-dependencies.xml -->
+    <_TrimmerDumpDependencies>true</_TrimmerDumpDependencies>
+
+  </PropertyGroup>
+</Project>
